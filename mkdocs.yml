@@ -1,0 +1,10 @@
+site_name: WebPartyTime
+theme:
+  palette: 
+    scheme: default
+    primary: green
+    accent: green
+  
+  name: material
+  logo: logo.svg
+  favicon: favicon.png

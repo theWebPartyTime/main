@@ -1,0 +1,6 @@
+[submodule "user"]
+	path = user
+	url = git@github.com:theWebPartyTime/user.git
+[submodule "server"]
+	path = server
+	url = git@github.com:theWebPartyTime/server.git
