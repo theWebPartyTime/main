@@ -1,5 +1,6 @@
 site_name: WebPartyTime
 theme:
+  language: ru
   palette: 
     scheme: default
     primary: green
