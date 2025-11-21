@@ -1,11 +1,76 @@
 site_name: WebPartyTime
+repo_url: https://github.com/theWebPartyTime/main
+repo_name: main
+
+nav:
+  - Введение: index.md
+  - Руководство пользователя:
+    - Как пользоваться Webpartytime?: user_guide/getting_started.md
+    - Дизайнер сценариев: user_guide/designer.md
+  - Руководство разработчика: 
+    - Устройство проекта: dev_guide/overview.md
+    - Frontend: dev_guide/frontend.md
+    - Backend: dev_guide/backend.md
+
 theme:
+  icon:
+    repo: fontawesome/brands/github
   language: ru
+  features:
+    - navigation.footer
+    - content.tooltips
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
   palette: 
-    scheme: default
-    primary: green
-    accent: green
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: lime
+      accent: lime
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: lime
+      accent: lime
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
   
   name: material
   logo: logo.svg
   favicon: favicon.png
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      auto_append:
+        - extra/glossary.md
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - abbr
+  - attr_list
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+
+watch:
+  - extra
+
+copyright: WebPartyTeam, 2025
