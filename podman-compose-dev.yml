@@ -6,6 +6,10 @@ services:
         dockerfile: Containerfile.dev
     volumes:
         - ./server:/app
+    env_file:
+      - .env
+    environment:
+      - DEV=true
     ports:
       - "8080:8080"
     depends_on:
@@ -46,7 +50,7 @@ services:
     image: migrate/migrate:latest
     command: ["-path", "/migrations", "-database", "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${DEV_POSTGRES_DB}?sslmode=disable", "up"]
     volumes: 
-        ./migrations:/migrations
+        ./server/migrations:/migrations
     depends_on:
       db:
         condition: service_healthy
