@@ -10,7 +10,7 @@
 Чтобы запустить проект локально и увидеть его в действии:
 
 ```shell
-git clone --recursive git@github.com:theWebPartyTime/main.git
+git clone --recurse-submodules https://github.com/theWebPartyTime/main.git
 ```
 
 Создайте в корневой парке репозитория файл .env и заполните его по образцу example.env.
