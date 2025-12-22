@@ -1,0 +1,62 @@
+@font-face {
+    font-family: "Desyatiy";
+    font-weight: normal;
+    src: url("./Desyatiy\ Regular.ttf");
+}
+
+@font-face {
+    font-family: "Desyatiy";
+    font-weight: bold;
+    src: url("./Desyatiy\ Bold.ttf");
+}
+
+:root {
+    --md-text-font: "Desyatiy";
+    scrollbar-gutter: stable;
+}
+
+:root::-webkit-scrollbar {
+    width: 7px;
+}
+
+:root::-webkit-scrollbar-thumb {
+    background-color: #cbdc38;
+}
+
+:root::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+[data-md-color-scheme="default"]
+.md-typeset mark {
+    background-color: #c3d900;
+    color: white;
+    padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+}
+
+[data-md-color-scheme="slate"]
+.md-typeset mark {
+    background-color: transparent;
+    color: #cbdc38;
+}
+
+.md-tooltip2 .md-typeset {
+    background-color: #cbdc38;
+    color: black;
+}
+
+.md-tooltip2 .md-typeset {
+    font-size: 0.7rem;
+}
+
+.md-typeset .admonition.note {
+    border-color: #cbdc38;
+}
+
+.md-ellipsis {
+    overflow: visible;
+}
+
+.nodeLabel {
+    color: black;
+}
