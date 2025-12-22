@@ -6,11 +6,14 @@ nav:
   - Введение: index.md
   - Руководство пользователя:
     - Как пользоваться Webpartytime?: user_guide/getting_started.md
-    - Дизайнер сценариев: user_guide/designer.md
+    - Ведущий: user_guide/create.md
+    - Участники: user_guide/join.md
   - Руководство разработчика: 
     - Устройство проекта: dev_guide/overview.md
+    - WebPartySpec: dev_guide/webpartyspec.md
     - Frontend: dev_guide/frontend.md
     - Backend: dev_guide/backend.md
+    - Перспективы: dev_guide/prospectives.md
 
 theme:
   icon:

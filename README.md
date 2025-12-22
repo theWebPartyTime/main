@@ -18,4 +18,4 @@ git clone --recursive git@github.com:theWebPartyTime/main.git
 docker-compose -f podman-compose-prod.yml up --build 
 ```
 
-Запущенное приложение будет доступно по адресу http://127.0.0.1:5173
+Запущенное приложение будет доступно по адресу http://127.0.0.1:3000
