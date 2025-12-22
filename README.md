@@ -13,7 +13,7 @@
 git clone --recursive git@github.com:theWebPartyTime/main.git
 ```
 
-Создайте в корневой парке репозитория файл .env и заполните по образцу example.env.
+Создайте в корневой парке репозитория файл .env и заполните его по образцу example.env.
 
 ```shell
 docker-compose -f podman-compose-prod.yml up --build 
