@@ -12,6 +12,8 @@
         <link rel="prev" href="../frontend/">
       
       
+        <link rel="next" href="../prospectives/">
+      
       
       <link rel="icon" href="../../favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
@@ -328,11 +330,33 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user_guide/designer/" class="md-nav__link">
+      <a href="../../user_guide/create/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Дизайнер сценариев
+    Ведущий
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_guide/join/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Участники
     
   </span>
   
@@ -400,6 +424,28 @@
   
   <span class="md-ellipsis">
     Устройство проекта
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../webpartyspec/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebPartySpec
     
   </span>
   
@@ -487,6 +533,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Основы
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Структура файлов
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#api" class="md-nav__link">
     <span class="md-ellipsis">
       API
@@ -499,6 +563,28 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prospectives/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Перспективы
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -538,6 +624,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Основы
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Структура файлов
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#api" class="md-nav__link">
     <span class="md-ellipsis">
       API
@@ -566,23 +670,65 @@
 
 
 <h1 id="backend">Backend</h1>
-<h2 id="api"><mark>API</mark></h2>
+<h2 id="_1"><mark>Основы</mark></h2>
 <p>Большая часть взаимодействий осуществляется через единое <mark>Websocket-подключение</mark>.</p>
-<p><mark>/ -</mark> Путь для подключения к <mark>WebSocket приложения</mark>, региструющего пользователя в списке игроков и уведомляющего о глобальных изменениях на сервере независимо от действующей регистрации.</p>
+<p>Каждая комната держит в памяти <mark>свой объект <abbr title="Граф состояния игры, содержащий данные для организации взаимодействия пользователей онлайн-комнаты.">PartyFlow</abbr></mark>, загружаемый при запуске комнаты.</p>
+<p>При этом создание и запуск комнат производятся клиентом через <mark>RPC</mark>.
+<mark>Там же можно добавить собственные условия и проверки ввода</mark>:</p>
+<div class="language-go highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">func</span><span class="w"> </span><span class="nx">createRoom</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nx">partyFlow</span><span class="p">.</span><span class="nx">AddInputChecker</span><span class="p">(</span><span class="s">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">input</span><span class="p">.</span><span class="nx">GetTextChecker</span><span class="p">())</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nx">partyFlow</span><span class="p">.</span><span class="nx">AddCondition</span><span class="p">(</span><span class="s">&quot;timer&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">conditions</span><span class="p">.</span><span class="nx">Timer</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nx">partyFlow</span><span class="p">.</span><span class="nx">AddCondition</span><span class="p">(</span><span class="s">&quot;inputBased&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">conditions</span><span class="p">.</span><span class="nx">Input</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span><span class="s">&quot;channel&quot;</span><span class="p">:</span><span class="w"> </span><span class="nx">room</span><span class="p">.</span><span class="nx">GetInputReadyChannel</span><span class="p">()},</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="p">)</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span>
+</span></code></pre></div>
 <div class="admonition note">
-<p>По умолчанию участвовать в играх и создавать их на основе публичных сценариев можно без регистрации. </p>
+<p>Вторым аргументом в <mark>AddCondition</mark> можно передать обработчику условия произвольный словарь для внедрения дополнительных аргументов.</p>
 </div>
-<p><mark>/extend -</mark> Позволяет загружать пользовательские ресурсы и сценарии на платформу.</p>
-<p><mark>/auth -</mark> По данному пути происходит авторизация на сервере, после чего при обращениях на корневой путь становятся доступны функции загрузки сценариев игр на сервер, сохранения игровой статистики и возможность заходить на сервера только для авторизированных пользователей.</p>
-<p><mark>/join -</mark> Используется для подключения к игровой комнате по её коду, что по сути равносильно оформлению подписки на WebSocket-сообщения этой комнаты.</p>
+<p><mark><abbr title="Граф состояния игры, содержащий данные для организации взаимодействия пользователей онлайн-комнаты.">PartyFlow</abbr></mark> включает в ход своего исполнения множество коллбек-функций, заполнением которых для пересылки данных клиентам занимается логика создания игровой комнаты:</p>
+<ul>
+<li><mark>OnQuery func(*<abbr title="Узел графа состояния игры, содержащий данные о текущем экране для ведущего и участников.">PartyQuery</abbr>)</mark> - Основная логика обработки и пересылки экранов пользователям </li>
+<li><mark>OnMove func()</mark> - Вызывается прямо перед переходом к следующему узлу</li>
+<li><mark>OnFinished func()</mark> - Вызывается при завершении <mark><abbr title="Граф состояния игры, содержащий данные для организации взаимодействия пользователей онлайн-комнаты.">PartyFlow</abbr></mark> независимо от причины</li>
+<li><mark>OnGetVoteCandidates func(*<abbr title="Узел графа состояния игры, содержащий данные о текущем экране для ведущего и участников.">PartyQuery</abbr>) map[string]string</mark> - Используется <mark><abbr title="Граф состояния игры, содержащий данные для организации взаимодействия пользователей онлайн-комнаты.">PartyFlow</abbr></mark> для получения списка вариантов при голосовании, пересылающегося затем участникам</li>
+<li><mark>OnGetWinners func(*<abbr title="Узел графа состояния игры, содержащий данные о текущем экране для ведущего и участников.">PartyQuery</abbr>) []string</mark> - Используется <mark><abbr title="Граф состояния игры, содержащий данные для организации взаимодействия пользователей онлайн-комнаты.">PartyFlow</abbr></mark> для получения списка победивших пользователей, чтобы вести их учёт и пересылать информацию ведущему</li>
+</ul>
+<p><mark>Создание своего условия</mark> заключается в написании функции, проверяющей условие <mark>асинхронно (в Goroutine)</mark>, и возвращающей канал <mark>chan struct{}</mark>, <mark>куда асинхронная функция должна подать сообщение в случае срабатывания условия</mark>:
+<div class="language-go highlight"><span class="filename">Простейшее условие (срабатывает тут же)</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">func</span><span class="w"> </span><span class="nx">MoveConditionless</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="kt">any</span><span class="p">,</span><span class="w"> </span><span class="nx">args</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="kd">chan</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="nx">channel</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="w"> </span><span class="kd">struct</span><span class="p">{},</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="kd">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="nx">channel</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}{}</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="p">}()</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">channel</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<h2 id="_2"><mark>Структура файлов</mark></h2>
+<p><mark>./cmd/</mark> - основная связующая логика (HTTP + Websocket)</p>
+<ul>
+<li><mark>centrifuge_events.go</mark> - Обработчики событий <mark>Centrifuge</mark></li>
+<li><mark>rpc.go</mark> - Обработчики основной логики RPC-вызовов</li>
+<li><mark>routes.go</mark> - HTTP-пути приложения</li>
+</ul>
+<p><mark>./internal/</mark> - основная бизнес-логика</p>
+<ul>
+<li><mark>channels/</mark> - вспомогательные функции для управления каналами <mark>Centrifuge</mark></li>
+<li><mark>colors/</mark> - объекты для цветного вывода в терминал</li>
+<li><mark>conditions/</mark> - стандартные условия перехода</li>
+<li><mark>inputs/</mark> - стандартные объекты для проверки ввода участников</li>
+<li><mark>partyflow/</mark> - логика парсинга и работы системы <mark><abbr title="Граф состояния игры, содержащий данные для организации взаимодействия пользователей онлайн-комнаты.">PartyFlow</abbr></mark></li>
+<li><mark>room/</mark> - основная логика для управления онлайн-комнатами</li>
+</ul>
+<h2 id="api"><mark>API</mark></h2>
+<p><mark>/join -</mark> Путь для подключения к <mark>WebSocket приложения</mark>, региструющего пользователя в списке игроков и уведомляющего о глобальных изменениях на сервере независимо от действующей регистрации.</p>
 <div class="admonition note">
-<p>В целях безопасности код игры не отображается в URL, так как он приравнивается по уровню безопасности к токену.</p>
+<p>Подключение к комнате равносильно оформлению подписки на её <mark>Centrifuge-канал</mark>.</p>
 </div>
-<p><mark>/start -</mark> Применяется для создания <mark><abbr title="Граф состояния игры, содержащий данные для организации взаимодействия пользователей онлайн-комнаты.">PartyFlow</abbr></mark> на основе сценария, что равносильно отдельному каналу сообщений внутри WebSocket.</p>
-<div class="admonition note">
-<p>По умолчанию держателем <mark><abbr title="Граф состояния игры, содержащий данные для организации взаимодействия пользователей онлайн-комнаты.">PartyFlow</abbr></mark> может быть только организатор игры. Когда держателей <mark><abbr title="Граф состояния игры, содержащий данные для организации взаимодействия пользователей онлайн-комнаты.">PartyFlow</abbr></mark> не остаётся либо истекает его длительность, игровая комната закрывается.</p>
-</div>
-<p><mark>/watch -</mark> Путь для подключения к <mark><abbr title="Граф состояния игры, содержащий данные для организации взаимодействия пользователей онлайн-комнаты.">PartyFlow</abbr></mark> в режиме просмотра. Зритель не может стать владельцем комнаты и не учитывается как её участник.</p>
+<p><mark>/auth -</mark> По данному пути происходит авторизация на сервере, после чего становятся доступны функции загрузки сценариев игр на сервер и возможность присоединяться к комнатам только для авторизированных пользователей.</p>
+<p><mark>/scripts -</mark>  Этот путь позволяет загружать и получать информацию о сценариях</p>
 
 
 
@@ -627,6 +773,22 @@
             </div>
           </a>
         
+        
+          
+          <a href="../prospectives/" class="md-footer__link md-footer__link--next" aria-label="Вперед: Перспективы">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Вперед
+              </span>
+              <div class="md-ellipsis">
+                Перспективы
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
         
       </nav>
     
