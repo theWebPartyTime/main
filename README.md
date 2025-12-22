@@ -9,13 +9,14 @@
 ## Быстрый старт
 Чтобы запустить проект локально и увидеть его в действии:
 
-
 ```shell
 git clone --recursive git@github.com:theWebPartyTime/main.git
 ```
+
+Создайте в корневой парке репозитория файл .env и заполните по образцу example.env.
 
 ```shell
 docker-compose -f podman-compose-prod.yml up --build 
 ```
 
-Запущенное приложение будет доступно по адресу http://127.0.0.1:3000
+Запущенное приложение будет доступно по адресу http://127.0.0.1:5173
