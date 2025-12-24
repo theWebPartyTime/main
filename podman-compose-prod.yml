@@ -4,15 +4,13 @@ services:
     build:
         context: ./server
         dockerfile: Containerfile.prod
-    ports:
-      - "8080:8080"
     env_file:
-      - .env
-    environment:
-      - GIN_MODE=release
+      - ./.env.prod
     depends_on:
-      db:
-        condition: service_healthy
+      - db
+    
+
+
 
   frontend:
     container_name: frontendWPT
@@ -20,35 +18,33 @@ services:
         context: ./user
         dockerfile: Containerfile.prod
     ports:
-      - "5173:80"
-    depends_on:
-     - backend
+      - ":80"
+    
 
   db:
     image: postgres:16
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${PROD_POSTGRES_DB}
-      - POSTGRES_PORT=${PROD_POSTGRES_PORT}
+    
+    env_file:
+      - ./.env.prod
     volumes:
         - postgres_data_prod:/var/lib/postgresql/data
     ports:
-      - "${PROD_POSTGRES_PORT}:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${PROD_POSTGRES_DB}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
-  migrate: 
-    image: migrate/migrate:latest
-    command: ["-path", "/migrations", "-database", "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${PROD_POSTGRES_DB}?sslmode=disable", "up"]
-    volumes: 
-        ./server/migrations:/migrations
-    depends_on:
-      db:
-        condition: service_healthy
+      - "5432:5432"
+  
+  traefik:
+    image: traefik:v3.6
+    container_name: traefik
+    command:
+      - "--configFile=/etc/traefik/traefik.yml"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+      - "8081:8081"
+    volumes:
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/routes.yml:/etc/traefik/routes.yml:ro
+      - ./letsencrypt:/letsencrypt
     
 volumes:
     postgres_data_prod:

@@ -1,0 +1,53 @@
+http:
+  routers:
+    backend:
+      rule: Host(`api.webparty.fun`)
+      entryPoints:
+        - server-backend
+      service: backend
+      tls:
+        certresolver: le
+      
+
+
+    frontend:
+      rule: "Host(`webparty.fun`)"
+      entryPoints:
+        - websecure
+      service: frontend
+      tls:
+        certresolver: le
+
+    dashboard:
+      rule: Host(`webparty.fun`)
+      entryPoints:
+        - dashboard
+      service: api@internal
+      middlewares:
+        - test-auth
+    
+
+
+  services:
+    frontend:
+      loadBalancer:
+        servers:
+          - url: "http://frontend:80"
+
+    backend:
+      loadBalancer:
+        servers:
+          - url: "http://backend:8080"
+    
+
+
+
+  middlewares:
+    test-auth:
+      basicAuth:
+        users:
+          - "admin:$apr1$JABmG9wJ$kSvi5SbA8G1c9friP/gMb."
+
+
+
+      
